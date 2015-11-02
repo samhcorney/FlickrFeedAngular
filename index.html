@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-GB" ng-app="flickrFeed" ng-strict-di>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="Flickr potato gallery feed">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Flickr Feed</title>
+		<link href='http://fonts.googleapis.com/css?family=Lato:700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="build/css/app.min.css">
+	</head>
+
+	<body ng-controller="FlickrFeedController">
+
+		<!-- List view -->
+		<div class="list" ng-show="listView">
+			<div class="list-view-filter-container">
+				<label>Filter by tag <input ng-model="search.tags" title="type search term here to filter results by tag name"></label>
+			</div>
+			<ul>
+				<li ng-repeat="item in items | filter:search:strict" class="list-item">
+
+					<p ng-hide="true">{{ item.tags }}</p>
+
+					<div class="left-container">
+						<a class="list-image" href="#" ng-click="openItem(item)" title="open details page for {{ item.title }}" style="background-image: url('{{ item.media.m }}')"></a>
+					</div>
+
+					<div class="right-container">
+						<h2 class="list-title"><a href="#" ng-click="openItem(item)" title="open details page for {{ item.title }}">{{ item.title }}</a></h2>
+						<div class="list-information-container">
+							<time class="list-published" datetime="{{ item.published | date: 'yyyy-MM-dd HH:mm' }}">Published: {{ item.published | dateSuffix }}</time>
+							<p class="list-author list-links"><a href="https://www.flickr.com/photos/{{ item.author_id }}" rel="author"  title="view the author {{ item.author | regex: '[(](.*)[)]' }} on Flickr">Photo author</a></p>
+							<p class="list-flickr-link list-links"><a href="{{ item.link }}" title="view the image {{ item.title }} on Flickr">View on Flickr</a></p>
+						</div>
+					</div>
+
+				</li>
+			</ul>
+		</div>
+
+		<!-- Details view -->
+		<div class="details" ng-hide="listView">
+			<ng-switch on="isAnyItemOpen()">
+				<section ng-switch-when="true">
+
+					<a class="return-to-list-button" href="#" ng-click="closeItem()" title="go back to list results">Back</a>
+					<h2 class="details-title"><a href="{{ openedItem.link }}" title="view the image {{ openedItem.title }} on Flickr">{{ openedItem.title }}</a></h2>
+
+					<div class="details-top-container">
+						<p class="details-author"><a href="https://www.flickr.com/photos/{{ openedItem.author_id }}" rel="author" title="view the author {{ openedItem.author | regex: '[(](.*)[)]' }} on Flickr">Photo author</a></p>
+						<time class="details-published" datetime="{{ openedItem.published | date: 'yyyy-MM-dd HH:mm' }}">Published: {{ openedItem.published | dateSuffix }}</time>
+					</div>
+
+					<div class="details-lower-left-container" alt="{{ openedItem.title }}" style="background-image: url('{{ openedItem.media.m }}')"></div>
+
+					<div class="details-lower-right-container">
+						<p class="details-description" ng-bind-html="openedItem.description | regex: '<\/a><\/p> <p>(.*)<\/p>'"></p>
+						<div class="tags-container">
+							<p class="details-tags-title">Tags:</p>
+							<ul class="details-tags">
+								<li ng-repeat="tag in openedItem.tags | split: ' '"><a href="https://www.flickr.com/search/?tags={{ tag }}" title="view results on flickr for the tag {{ tag }}">{{ tag }}</a></li>
+							</ul>
+						</div>
+					</div>
+
+				</section>
+			</ng-switch>
+		</div>
+
+		<script src="build/js/vendor/angular.min.js"></script>
+		<script src="build/js/vendor/angular-sanitize.min.js"></script>
+        <script src="build/js/app.min.js"></script>
+        <!-- <script>
+	        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+	        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+	        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+	        e.src='https://www.google-analytics.com/analytics.js';
+	        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+	        ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+    	</script> -->
+	</body>
+</html>

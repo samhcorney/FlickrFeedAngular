@@ -1,0 +1,111 @@
+.list-view-filter-container {
+    background-color: $colour1;
+    padding: 1em;
+    color: $white;
+    input {
+        margin-left: .5em;
+        padding: .5em;
+        border: none;
+        color: $black;
+    }
+}
+
+.list ul {
+    list-style: none;
+    margin: 0em;
+    padding: 0em;
+    li:nth-child(odd) {
+        background-color: $white;
+    }
+    li:nth-child(even) {
+        background-color: $colour5;
+    }
+}
+
+.list-item {
+    height: 150px;
+    overflow: hidden;
+}
+
+// list image
+.left-container {
+    display: inline-block;
+    float: left;
+    height: 100%;
+    width: 200px;
+}
+
+.list-image {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+// list information
+.right-container {
+    display: inline-block;
+    box-sizing: border-box;
+    float: left;
+    width: calc(100% - 200px);
+    padding: 1.5em;
+}
+
+.list-title {
+    margin: 0em 0em .3em 0em;
+    font-size: 1.5em;
+    line-height: 1em;
+    a {
+        text-decoration: none;
+        color: $colour1;
+    }
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.list-published {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: .5em;
+}
+
+.list-links {
+    font-size: 1.2em;
+}
+
+.list-author {
+    margin: 0em 1.3em 1em 0em;
+}
+
+.list.ng-leave {
+    opacity: 0;
+    transition: all 3s;
+}
+
+@media screen and (min-width: 801px) {
+    .list-title {
+        margin-bottom: 1.2em;
+    }
+    .list-information-container {
+            display: flex;
+            .list-author {
+                order: -1;
+            }
+            .list-published {
+                margin-right: 1.3em;
+            }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .list-published {
+        display: none;
+    }
+    .left-container {
+        width: 150px;
+    }
+    .right-container {
+        width: calc(100% - 150px);
+    }
+}
